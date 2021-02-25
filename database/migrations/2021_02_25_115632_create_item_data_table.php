@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdministratorTable extends Migration
+class CreateItemDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateAdministratorTable extends Migration
      */
     public function up()
     {
-        Schema::create('administrator', function (Blueprint $table) {
+        Schema::create('item_data', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code');
+            $table->string('nama');
+            $table->string('tahun');
+            $table->integer('views');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateAdministratorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('administrator');
+        Schema::dropIfExists('item_data');
     }
 }

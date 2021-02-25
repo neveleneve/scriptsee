@@ -40,12 +40,32 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
             'hash' => false,
         ],
+        
+        'administrator' => [
+            'driver' => 'session',
+            'provider' => 'administrator',
+        ],
+        'apiadministrator' => [
+            'driver' => 'token',
+            'provider' => 'administrator',
+            'hash' => false,
+        ],
+        
+        'buyer' => [
+            'driver' => 'session',
+            'provider' => 'buyer',
+        ],
+        'apibuyer' => [
+            'driver' => 'token',
+            'provider' => 'buyer',
+            'hash' => false,
+        ],
+        
     ],
 
     /*
@@ -67,6 +87,14 @@ return [
 
     'providers' => [
         'users' => [
+            'driver' => 'eloquent',
+            'model' => App\User::class,
+        ],
+        'administrator' => [
+            'driver' => 'eloquent',
+            'model' => App\User::class,
+        ],
+        'buyer' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],

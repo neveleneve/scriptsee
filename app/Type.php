@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Brand_Item extends Model
+class Type extends Model
 {
-    protected $table = 'brand_item';
+    protected $table = 'type';
 }

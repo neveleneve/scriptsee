@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @yield('title')
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <link href="{{asset("storage/css/css/bootstrap.min.css")}}" rel="stylesheet">
-    <link href="{{asset("storage/css/css/mdb.min.css")}}" rel="stylesheet">
+    <link href="{{ asset('storage/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('storage/bootstrap/css/mdb.min.css') }}" rel="stylesheet">
     @yield('customcss')
 </head>
 
@@ -16,22 +16,30 @@
     <header>
         @include('layouts.navigation.guest.navbar')
     </header>
-    <main>
-        <div class="container">
-            @yield('content')
-        </div>
-    </main>
+    @yield('content')
     <footer>
 
     </footer>
-    <script type="text/javascript" src="{{asset('storage/css/js/jquery.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('storage/css/js/popper.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('storage/css/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('storage/css/js/mdb.min.js')}}"></script>
-    <script>
-      new WOW().init();
+    <script type="text/javascript" src="{{ asset('storage/bootstrap/js/jquery-3.4.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('storage/bootstrap/js/popper.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('storage/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('storage/bootstrap/js/mdb.min.js') }}"></script>
+    <script type="text/javascript">
+        /* WOW.js init */
+        new WOW().init();
+        // Tooltips Initialization
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+        // Material Select Initialization
+        $(document).ready(function() {
+            $('.mdb-select').materialSelect();
+        });
+        // SideNav Initialization
+        $(".button-collapse").sideNav();
+
     </script>
-@yield('customjs')
+    @yield('customjs')
 </body>
 
 </html>
