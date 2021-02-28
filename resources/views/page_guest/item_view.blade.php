@@ -5,6 +5,28 @@
     </title>
 @endsection
 
+@section('customjs')
+    <script type="text/javascript">
+        new WOW().init();
+        $(".button-collapse").sideNav();
+        var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+        Ps.initialize(sideNavScrollbar);
+        $(function() {
+
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        $(document).ready(function() {
+
+            $('.mdb-select').material_select();
+        });
+
+    </script>
+@endsection
+
+@section('cssbody')
+    class="product-v1 hidden-sn white-skin animated"
+@endsection
+
 @section('content')
     <div class="container mt-5 pt-4">
         <section id="productDetails" class="pb-5">
@@ -46,33 +68,27 @@
                             class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
                             {{ $data['nama'] }}
                         </h2>
-                        <a class="text-muted"> by </a>
+                        <a class="text-muted mb-1 ml-xl-0 ml-4"> by </a>
                         <a class="mr-4" href="{{ url('/user/' . $data['seller']) }}">{{ $data['seller'] }}</a>
                         <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">
                             @if ($data['sell_type'] == 1)
                                 Bid
                             @elseif($data['sell_type'] == 2)
-                                Sell
-                            @elseif($data['sell_type'] == 3)
-                                Bid / Sell
+                                Sell                            
                             @endif
                         </span>
-                        <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
-                            <span>
-                                <strong>
-                                    @if ($data['sell_type'] == 1)
-                                        Bid Limit :
-                                    @elseif($data['sell_type'] == 2)
-                                        Price
-                                    @elseif($data['sell_type'] == 3)
-                                        Bid Limit :
-                                    @endif
-                                </strong>
-                            </span>
+                        <h3 class="h3-responsive text-center text-md-left mb-5 mb-xl-0 ml-xl-0 ml-4">
                             <span class="red-text font-weight-bold">
                                 Rp. {{ number_format($data['price_limit'], '0', ',', '.') }}
                             </span>
                         </h3>
+                        <span class="badge badge-info">
+                                @if ($data['sell_type'] == 1)
+                                    Buy It Now
+                                @elseif($data['sell_type'] == 2)
+                                    Price :
+                                @endif
+                        </span>
                         <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
                             <div class="card">
                                 <div class="card-header" role="tab" id="headingTwo2">
@@ -137,7 +153,7 @@
                         <section class="color">
                             <div class="mt-5">
                                 <p class="h5 dark-grey-text">Set your bid</p>
-                                @auth('buyer')
+                                {{-- @auth('buyer') --}}
                                     <div class="row text-center text-md-left">
                                         <div class="col-12 ">
                                             <div class="form-group">
@@ -152,8 +168,8 @@
                                                 <i class="fas fa-cart-plus mr-2" aria-hidden="true"></i> Add to cart</button>
                                         </div>
                                     </div>
-                                @endauth
-                                @guest
+                                {{-- @endauth --}}
+                                {{-- @guest
                                     <div class="row text-center text-md-left">
                                         <div class="col-12 ">
                                             <div class="form-group">
@@ -170,7 +186,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                @endguest
+                                @endguest --}}
                             </div>
                         </section>
                     </div>

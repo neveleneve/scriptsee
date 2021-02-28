@@ -5,6 +5,25 @@
     </title>
 @endsection
 
+@section('customjs')
+    <script type="text/javascript">
+        new WOW().init();
+        $(".button-collapse").sideNav();
+        var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+        Ps.initialize(sideNavScrollbar);
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        $(document).ready(function() {
+            $('.mdb-select').material_select();
+        });
+    </script>
+@endsection
+
+@section('cssbody')
+    class="homepage-v3 hidden-sn white-skin animated"
+@endsection
+
 @section('content')
     <div class="container mt-5 pt-3">
         <nav class="navbar navbar-expand-lg navbar-dark primary-color mt-5">
@@ -179,7 +198,7 @@
                                 </h6>
                                 <a class="text-muted">by </a>
                                 <a class="dark-gray-text font-weight-bold"
-                                    href="{{ url('/user/') }}">{{ $username }}</a>
+                                    href="{{ url('/user/'.$username) }}">{{ $username }}</a>
                             </div>
                         </div>
                     </div>
