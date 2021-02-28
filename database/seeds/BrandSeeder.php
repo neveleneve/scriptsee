@@ -1,5 +1,6 @@
 <?php
 
+use App\Brand;
 use Illuminate\Database\Seeder;
 
 class BrandSeeder extends Seeder
@@ -11,6 +12,8 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        
+        Brand::insert([
+            'nama' => 'Abarth'
+        ]);
     }
 }
