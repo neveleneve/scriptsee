@@ -9,6 +9,7 @@ use App\Item_Details;
 use App\Type;
 use App\User_Data_Buyer;
 use App\User_Data_Seller;
+use App\User_Login;
 use Illuminate\Http\Request;
 
 class GuestController extends Controller
@@ -56,7 +57,15 @@ class GuestController extends Controller
 
     public function login()
     {
-        # code...
+        return view('login');
+    }
+
+    public function loggin_in(Request $data)
+    {
+        $login = User_Login::where('username', $data->username)->count();
+        if ($login == 0) {
+            # code...
+        }
     }
 
     public function user_view()

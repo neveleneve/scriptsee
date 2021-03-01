@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/login', 'GuestController@login');
+Route::post('/login', 'GuestController@loggin_in');
 Route::get('/', 'GuestController@index');
 Route::get('/item/{code}', 'GuestController@item_view');
 Route::get('/user/{username}', 'GuestController@user_view');
