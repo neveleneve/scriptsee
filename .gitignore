@@ -1,7 +1,6 @@
 /node_modules
-!/public/storage
-/storage/*.key
 !/vendor
+!/public/storage/images/brands/*
 .env
 .env.backup
 .phpunit.result.cache
