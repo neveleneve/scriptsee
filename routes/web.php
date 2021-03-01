@@ -11,13 +11,14 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Auth::routes();
+Route::get('/login', 'GuestController@login');
 Route::get('/', 'GuestController@index');
 Route::get('/item/{code}', 'GuestController@item_view');
 Route::get('/user/{username}', 'GuestController@user_view');
-
-
 Route::get('/search', 'GuestController@search');
 
-Route::get('/login', 'GuestController@login');
+

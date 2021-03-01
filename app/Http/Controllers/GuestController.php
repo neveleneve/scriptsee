@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Bid_Placement;
 use App\Brand;
 use App\Item_Data;
 use App\Item_Details;
 use App\Type;
+use App\User_Data_Buyer;
 use App\User_Data_Seller;
 use Illuminate\Http\Request;
 
@@ -36,13 +38,14 @@ class GuestController extends Controller
     {
         $dataseller = User_Data_Seller::get();
         $details = Item_Details::get();
-        // dd($this->latestadd());
+        $mostbrands = Brand::OrderBy('views')->paginate(6);
         return view('page_guest.dashboard', [
             'daftartipemobil' => $this->tipemobil(),
             'daftarbrandmobil' => $this->brandmobil(),
             'latestitem' => $this->latestadd(),
             'seller' => $dataseller,
             'detail' => $details,
+            'mostbrand' => $mostbrands
         ]);
     }
 
@@ -87,23 +90,32 @@ class GuestController extends Controller
         $dataselltype = $detailsitem[0]['sell_type'];
         // -- Description
         $datadescription = $detailsitem[0]['description'];
+        // -- Bid Interval
+        $bid = $detailsitem[0]['bid'];
+        // -- Latest Bid
+        $latestbid = Bid_Placement::where('code_item', $code)->orderBy('created_at')->paginate(3);
+        // -- Highest Bid
+        $highestbid = Bid_Placement::where('code_item', $code)->orderByDesc('bid_price')->paginate(3);
 
-        
         $dataall = [
             'nama' => $itemdata[0]['nama'],
+            'views' => $itemdata[0]['views'],
             'tahun' => $itemdata[0]['tahun'],
             'gambar' => $image,
             'brand' => $databranditem['brand'],
             'type' => $datatypeitem['type'],
             'price_limit' => $datalimitprice,
+            'bid' => $bid,
             'seller' => $dataseller['username'],
             'time_limit' => $datalimittime,
             'sell_type' => $dataselltype,
             'desc' => $datadescription,
+            'latestbid' => $latestbid,
+            'highestbid' => $highestbid,
         ];
         // dd($dataall);
         return view('page_guest.item_view', [
-            'data' => $dataall
+            'data' => $dataall,
         ]);
     }
 }

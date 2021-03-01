@@ -45,7 +45,7 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-        
+        // 
         'administrator' => [
             'driver' => 'session',
             'provider' => 'administrator',
@@ -55,7 +55,7 @@ return [
             'provider' => 'administrator',
             'hash' => false,
         ],
-        
+        // 
         'buyer' => [
             'driver' => 'session',
             'provider' => 'buyer',
@@ -65,7 +65,17 @@ return [
             'provider' => 'buyer',
             'hash' => false,
         ],
-        
+        // 
+        'seller' => [
+            'driver' => 'session',
+            'provider' => 'seller',
+        ],
+        'apiseller' => [
+            'driver' => 'token',
+            'provider' => 'seller',
+            'hash' => false,
+        ],
+
     ],
 
     /*
@@ -95,6 +105,10 @@ return [
             'model' => App\User::class,
         ],
         'buyer' => [
+            'driver' => 'eloquent',
+            'model' => App\User::class,
+        ],
+        'seller' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],

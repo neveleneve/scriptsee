@@ -1,4 +1,4 @@
-@extends('layouts.master.guestmaster')
+@extends('layouts.master.master')
 @section('title')
     <title>
         Selamat Datang di Lelangin Store
@@ -17,6 +17,7 @@
         $(document).ready(function() {
             $('.mdb-select').material_select();
         });
+
     </script>
 @endsection
 
@@ -26,7 +27,7 @@
 
 @section('content')
     <div class="container mt-5 pt-3">
-        <nav class="navbar navbar-expand-lg navbar-dark primary-color mt-5">
+        <nav class="navbar navbar-expand-lg navbar-dark black mt-5">
             {{-- <a class="font-weight-bold white-text mr-4" href="#">Categories</a> --}}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
                 aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,11 +148,75 @@
         </nav>
     </div>
     <div class="container">
+        @if (count($latestitem) == 0)
+
+        @else
+            <section class="mb-5">
+                <div class="row">
+                    <div class="col-12">
+                        <hr>
+                        <h5 class="text-center font-weight-bold dark-grey-text"><strong>Latest Products</strong></h5>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    @php
+                        $i = 0;
+                    @endphp
+                    @foreach ($latestitem as $item)
+                        <div class="col-lg-4 col-md-12 col-12">
+                            <div class="row mt-5 py-2 mb-4 hoverable align-items-center">
+                                <div class="col-6">
+                                    <a href="{{ url('/item/' . $item->code) }}">
+                                        <img src="{{ asset('/storage/images/item/' . $item->code . '-1.jpg') }}"
+                                            class="img-fluid">
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    @php
+                                        $price = $detail->where('code_item', $item['code'])[0]['limit_price'];
+                                        $id_user = $detail->where('code_item', $item['code'])[0]['id_seller'];
+                                        $username = $seller->where('id', $id_user)[0]['username'];
+                                        $selltype = $detail->where('code_item', $item['code'])[0]['sell_type'];
+                                    @endphp
+                                    <span class="bagde badge-danger px-1">
+                                        @if ($selltype == 1)
+                                            Bid
+                                        @elseif($selltype == 2)
+                                            Sell
+                                        @endif
+                                    </span>
+                                    <h6 class="font-weight-bold">
+                                        <a href="{{ url('/item/' . $item->code) }}" class="text-muted">
+                                            <strong>
+                                                {{ $item->nama }}
+                                            </strong>
+                                        </a>
+                                    </h6>
+                                    <h6 class="h6-responsive font-weight-bold dark-grey-text">
+                                        <strong>
+                                            Rp. {{ number_format($price, '0', ',', '.') }}
+                                        </strong>
+                                    </h6>
+                                    <a class="text-muted">by </a>
+                                    <a class="dark-gray-text font-weight-bold" href="{{ url('/user/' . $username) }}">
+                                        {{ $username }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @php
+                            $i += 1;
+                        @endphp
+                    @endforeach
+                </div>
+            </section>
+        @endif
         <section class="mb-5">
             <div class="row">
                 <div class="col-12">
                     <hr>
-                    <h5 class="text-center font-weight-bold dark-grey-text"><strong>Latest Products</strong></h5>
+                    <h5 class="text-center font-weight-bold dark-grey-text"><strong>Most Viewed Brands</strong></h5>
                     <hr>
                 </div>
             </div>
@@ -159,46 +224,26 @@
                 @php
                     $i = 0;
                 @endphp
-                @foreach ($latestitem as $item)
+                @foreach ($mostbrand as $item)
                     <div class="col-lg-4 col-md-12 col-12">
                         <div class="row mt-5 py-2 mb-4 hoverable align-items-center">
                             <div class="col-6">
-                                <a href="{{ url('/item/' . $item->code) }}">
-                                    <img src="{{ asset('/storage/images/item/' . $item->code . '-1.jpg') }}"
-                                        class="img-fluid">
+                                <a href="{{ url('/brand/' . $item->brand) }}">
+                                    <img src="{{ asset('/storage/images/brands/' . str_replace(' ', '_', $item->brand) . '.png') }}"
+                                        style="height: 100px" class="img-fluid">
                                 </a>
                             </div>
                             <div class="col-6">
-                                @php
-                                    $price = $detail->where('code_item', $item['code'])[0]['limit_price'];
-                                    $id_user = $detail->where('code_item', $item['code'])[0]['id_seller'];
-                                    $username = $seller->where('id', $id_user)[0]['username'];
-                                    $selltype = $detail->where('code_item', $item['code'])[0]['sell_type'];
-                                @endphp
                                 <span class="bagde badge-danger px-1">
-                                    @if ($selltype == 1)
-                                        Bid
-                                    @elseif($selltype == 2)
-                                        Sell
-                                    @elseif($selltype == 3)
-                                        Bid / Sell
-                                    @endif
+                                    Seen {{ $item->views }} Times
                                 </span>
                                 <h6 class="font-weight-bold">
-                                    <a href="{{ url('/item/' . $item->code) }}" class="text-muted">
+                                    <a href="{{ url('/brand/' . $item->brand) }}" class="text-muted">
                                         <strong>
-                                            {{ $item->nama }}
+                                            {{ $item->brand }}
                                         </strong>
                                     </a>
                                 </h6>
-                                <h6 class="h6-responsive font-weight-bold dark-grey-text">
-                                    <strong>
-                                        Rp. {{ number_format($price, '0', ',', '.') }}
-                                    </strong>
-                                </h6>
-                                <a class="text-muted">by </a>
-                                <a class="dark-gray-text font-weight-bold"
-                                    href="{{ url('/user/'.$username) }}">{{ $username }}</a>
                             </div>
                         </div>
                     </div>

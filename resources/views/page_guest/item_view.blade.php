@@ -1,4 +1,4 @@
-@extends('layouts.master.guestmaster')
+@extends('layouts.master.master')
 @section('title')
     <title>
         Selamat Datang di Lelangin Store
@@ -32,7 +32,7 @@
         <section id="productDetails" class="pb-5">
             <div class="row">
                 <div class="col-12">
-                    <a class="btn btn-sm btn-dark" href="{{url('/')}}">
+                    <a class="btn btn-sm btn-dark" href="{{ url('/') }}">
                         <i class="fas fa-chevron-left"></i>
                         <strong>Kembali</strong>
                     </a>
@@ -74,8 +74,11 @@
                             @if ($data['sell_type'] == 1)
                                 Bid
                             @elseif($data['sell_type'] == 2)
-                                Sell                            
+                                Sell
                             @endif
+                        </span>
+                        <span class="badge badge-info product mb-4 ml-xl-2 ml-4">
+                            seen {{ $data['views'] }} time(s)
                         </span>
                         <h3 class="h3-responsive text-center text-md-left mb-5 mb-xl-0 ml-xl-0 ml-4">
                             <span class="red-text font-weight-bold">
@@ -83,11 +86,11 @@
                             </span>
                         </h3>
                         <span class="badge badge-info">
-                                @if ($data['sell_type'] == 1)
-                                    Buy It Now
-                                @elseif($data['sell_type'] == 2)
-                                    Price :
-                                @endif
+                            @if ($data['sell_type'] == 1)
+                                Buy It Now
+                            @elseif($data['sell_type'] == 2)
+                                Price :
+                            @endif
                         </span>
                         <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
                             <div class="card">
@@ -120,7 +123,12 @@
                                                     <td class="font-weight-bold">:</td>
                                                     <td>{{ $data['type'] }}</td>
                                                 </tr>
-                                                @if ($data['sell_type'] == 1 || $data['sell_type'] == 3)
+                                                @if ($data['sell_type'] == 1)
+                                                    <tr>
+                                                        <td class="font-weight-bold">Bid Interval</td>
+                                                        <td class="font-weight-bold">:</td>
+                                                        <td>{{ number_format($data['bid'], 0, ',', '.') }}</td>
+                                                    </tr>
                                                     <tr>
                                                         <td class="font-weight-bold">Bid Closing</td>
                                                         <td class="font-weight-bold">:</td>
@@ -153,7 +161,7 @@
                         <section class="color">
                             <div class="mt-5">
                                 <p class="h5 dark-grey-text">Set your bid</p>
-                                {{-- @auth('buyer') --}}
+                                @auth('buyer')
                                     <div class="row text-center text-md-left">
                                         <div class="col-12 ">
                                             <div class="form-group">
@@ -168,8 +176,8 @@
                                                 <i class="fas fa-cart-plus mr-2" aria-hidden="true"></i> Add to cart</button>
                                         </div>
                                     </div>
-                                {{-- @endauth --}}
-                                {{-- @guest
+                                @endauth
+                                @guest
                                     <div class="row text-center text-md-left">
                                         <div class="col-12 ">
                                             <div class="form-group">
@@ -186,7 +194,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                @endguest --}}
+                                @endguest
                             </div>
                         </section>
                     </div>
@@ -215,40 +223,27 @@
                         </div>
                         <section id="reviews" class="pb-5">
                             <div class="comments-list text-center text-md-left">
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <h5 class="user-name font-weight-bold">
-                                            Martha Smith
-                                        </h5>
-                                        <div class="card-data">
-                                            <ul class="list-unstyled mb-1">
-                                                <li class="comment-date font-small grey-text">
-                                                    <i class="far fa-clock-o"></i>
-                                                    {{-- Tanggal Bid --}}
-                                                    05/10/2015
-                                                </li>
-                                                <li class="commen-date font-weight-bold dark-grey-text">
-                                                    Rp. 25.000.000
-                                                </li>
-                                            </ul>
+                                @foreach ($data['latestbid'] as $item)
+                                    <div class="row mb-2">
+                                        <div class="col-12">
+                                            <h5 class="user-name font-weight-bold">
+                                                {{ $item->nama[0]['nama'] }}
+                                            </h5>
+                                            <div class="card-data">
+                                                <ul class="list-unstyled mb-1">
+                                                    <li class="comment-date font-small grey-text">
+                                                        {{-- Tanggal Bid --}}
+                                                        {{ date('d/m/Y', strtotime($item->created_at)) }}
+                                                    </li>
+                                                    <li class="commen-date font-weight-bold dark-grey-text">
+                                                        Rp. {{ number_format($item->bid_price, 0, ',', '.') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-
-                                        <p class="dark-grey-text article">
-                                            <strong>Comment : </strong>
-                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                            nisi ut
-                                            aliquip ex ea commodo consequat. Duis
-
-                                            aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                            fugiat nulla
-                                            pariatur.
-                                            Excepteur
-
-                                            sint occaecat cupidatat non proident.
-                                        </p>
                                     </div>
-                                </div>
-                                <hr>
+                                    <hr>
+                                @endforeach
                             </div>
                         </section>
                     </div>
@@ -258,40 +253,27 @@
                         </div>
                         <section id="reviews" class="pb-5">
                             <div class="comments-list text-center text-md-left">
-                                <div class="row mb-2">
-                                    <div class="col-12">
-                                        <h5 class="user-name font-weight-bold">
-                                            Martha Smith
-                                        </h5>
-                                        <div class="card-data">
-                                            <ul class="list-unstyled mb-1">
-                                                <li class="comment-date font-small grey-text">
-                                                    <i class="far fa-clock-o"></i>
-                                                    {{-- Tanggal Bid --}}
-                                                    05/10/2015
-                                                </li>
-                                                <li class="commen-date font-weight-bold dark-grey-text">
-                                                    Rp. 25.000.000
-                                                </li>
-                                            </ul>
+                                @foreach ($data['highestbid'] as $item)
+                                    <div class="row mb-2">
+                                        <div class="col-12">
+                                            <h5 class="user-name font-weight-bold">
+                                                {{ $item->nama[0]['nama'] }}
+                                            </h5>
+                                            <div class="card-data">
+                                                <ul class="list-unstyled mb-1">
+                                                    <li class="comment-date font-small grey-text">
+                                                        {{-- Tanggal Bid --}}
+                                                        {{ date('d/m/Y', strtotime($item->created_at)) }}
+                                                    </li>
+                                                    <li class="commen-date font-weight-bold dark-grey-text">
+                                                        Rp. {{ number_format($item->bid_price, 0, ',', '.') }}
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-
-                                        <p class="dark-grey-text article">
-                                            <strong>Comment : </strong>
-                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                            nisi ut
-                                            aliquip ex ea commodo consequat. Duis
-
-                                            aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                            fugiat nulla
-                                            pariatur.
-                                            Excepteur
-
-                                            sint occaecat cupidatat non proident.
-                                        </p>
                                     </div>
-                                </div>
-                                <hr>
+                                    <hr>
+                                @endforeach
                             </div>
                         </section>
                     </div>

@@ -6,20 +6,31 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+            @guest
             <ul class="navbar-nav ml-auto">               
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-light white-text font-weight-bold"
                         id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user white-text"></i>
-                        User
+                        Pengguna
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-cyan"
                         aria-labelledby="navbarDropdownMenuLink-4">
-                        <a class="dropdown-item waves-effect waves-light" href="{{url('/login')}}">Sign In</a>
-                        <a class="dropdown-item waves-effect waves-light" href="{{url('/register')}}">Register</a>
+                        <a class="dropdown-item waves-effect waves-light" href="{{url('/login')}}">Masuk</a>
+                        <a class="dropdown-item waves-effect waves-light" href="{{url('/register')}}">Daftar</a>
                     </div>
                 </li>
             </ul>
+            @endguest
+            @auth('administrator')
+                
+            @endauth
+            @auth('buyer')
+                
+            @endauth
+            @auth('seller')
+                
+            @endauth
         </div>
     </div>
 </nav>

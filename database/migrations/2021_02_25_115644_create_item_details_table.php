@@ -18,9 +18,11 @@ class CreateItemDetailsTable extends Migration
             $table->string('code_item');
             $table->integer('id_seller');
             $table->integer('id_brand');
+            $table->integer('sell_type');
             $table->integer('type');
             $table->date('limit_time');
             $table->integer('limit_price');
+            $table->integer('bid');
             $table->text('description');
             $table->timestamps();
         });

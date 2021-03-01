@@ -15,11 +15,11 @@
 
 <body @yield('cssbody')>
     <header>
-        @include('layouts.navigation.guest.navbar')
+        @include('layouts.navigation.navbar')
     </header>
     @yield('content')
     <footer>
-        @include('layouts.navigation.guest.footer')
+        @include('layouts.navigation.footer')
     </footer>
     <script type="text/javascript" src="{{ asset('storage/bootstrap/js/jquery-3.4.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('storage/bootstrap/js/popper.min.js') }}"></script>
